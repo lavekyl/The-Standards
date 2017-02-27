@@ -23,8 +23,8 @@
 @media screen and (min-width: 951px) {
   #header-right {
     float: right;
-    margin-top: 3.7rem;
-    margin-bottom: 3.7rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
   }
 }
 @media screen and (max-width: 951px) {

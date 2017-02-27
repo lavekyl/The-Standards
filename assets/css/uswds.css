@@ -3197,7 +3197,14 @@ fieldset {
 
 .usa-logo a {
   color: #212121;
+  display: block;
   text-decoration: none;
+}
+
+.usa-logo a img {
+  display: block;
+  height: auto;
+  max-width: 300px;
 }
 
 .usa-logo br {
