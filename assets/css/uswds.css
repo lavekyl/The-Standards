@@ -3716,7 +3716,6 @@ fieldset {
 @media screen and (min-width: 951px) {
   .usa-nav-primary > li > a {
     padding: 1.3rem 1.5rem 1.7rem;
-    color: #5b616b;
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.2;
