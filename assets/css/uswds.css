@@ -3204,7 +3204,7 @@ fieldset {
 .usa-logo a img {
   display: block;
   height: auto;
-  max-width: 300px;
+  max-width: 135px;
 }
 
 .usa-logo br {
@@ -3212,6 +3212,9 @@ fieldset {
 }
 
 @media screen and (min-width: 951px) {
+  .usa-logo a img {
+    max-width: 300px;
+  }
   .usa-logo br {
     display: block;
   }
