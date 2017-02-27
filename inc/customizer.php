@@ -38,6 +38,17 @@ function standards_customize_register( $wp_customize ) {
 		'settings'   => 'nav_background_color',
 	) ) );
 
+	// Nav links
+	$wp_customize->add_setting( 'nav_link_color' , array(
+    'default'     => '#212121',
+    'transport'   => 'refresh',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'nav_link_color', array(
+		'label'        => 'Navigation Link Color',
+		'section'    => 'colors',
+		'settings'   => 'nav_link_color',
+	) ) );
+
 	// Footer primary background
 	$wp_customize->add_setting( 'footer_prime_background_color' , array(
     'default'     => '#f1f1f1',
@@ -49,6 +60,17 @@ function standards_customize_register( $wp_customize ) {
 		'settings'   => 'footer_prime_background_color',
 	) ) );
 
+	// Footer primary text color
+	$wp_customize->add_setting( 'footer_prime_text_color' , array(
+    'default'     => '#212121',
+    'transport'   => 'refresh',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'footer_prime_text_color', array(
+		'label'        => 'Footer Primary Text Color',
+		'section'    => 'colors',
+		'settings'   => 'footer_prime_text_color',
+	) ) );
+
 	// Footer secondary background
 	$wp_customize->add_setting( 'footer_sec_background_color' , array(
     'default'     => '#d6d7d9',
@@ -58,6 +80,17 @@ function standards_customize_register( $wp_customize ) {
 		'label'        => 'Footer Secondary Background Color',
 		'section'    => 'colors',
 		'settings'   => 'footer_sec_background_color',
+	) ) );
+
+	// Footer secondary text color
+	$wp_customize->add_setting( 'footer_sec_text_color' , array(
+    'default'     => '#212121',
+    'transport'   => 'refresh',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'footer_sec_text_color', array(
+		'label'        => 'Footer Secondary Text Color',
+		'section'    => 'colors',
+		'settings'   => 'footer_sec_text_color',
 	) ) );
 	//**** Section colors end
 
@@ -74,6 +107,9 @@ function standards_customizer_css() { ?>
 		}
 		.usa-nav {
 			background: <?php echo get_theme_mod('nav_background_color', '#ffffff'); ?>;
+		}
+		.usa-nav-primary a {
+			color: <?php echo get_theme_mod('nav_link_color', '#212121'); ?>;
 		}
 		.usa-footer-primary-section {
 			background: <?php echo get_theme_mod('footer_prime_background_color', '#f1f1f1'); ?>;
