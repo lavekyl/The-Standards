@@ -50,14 +50,29 @@
 			$( '.usa-nav' ).css( 'background-color', newval );
 		} );
 	} );
+	wp.customize( 'nav_link_color', function( value ) {
+		value.bind( function( newval ) {
+			$( '.usa-nav-primary a' ).css( 'color', newval );
+		} );
+	} );
 	wp.customize( 'footer_prime_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$( '.usa-footer-primary-section' ).css( 'background-color', newval );
 		} );
 	} );
+	wp.customize( 'footer_prime_text_color', function( value ) {
+		value.bind( function( newval ) {
+			$( '.usa-footer-primary-section p, .usa-footer-primary-section a' ).css( 'color', newval );
+		} );
+	} );
 	wp.customize( 'footer_sec_background_color', function( value ) {
 		value.bind( function( newval ) {
 			$( '.usa-footer-secondary_section' ).css( 'background-color', newval );
+		} );
+	} );
+	wp.customize( 'footer_sec_text_color', function( value ) {
+		value.bind( function( newval ) {
+			$( '.usa-footer-secondary_section p, .usa-footer-secondary_section a' ).css( 'color', newval );
 		} );
 	} );
 

@@ -111,11 +111,19 @@ function standards_customizer_css() { ?>
 		.usa-nav-primary a {
 			color: <?php echo get_theme_mod('nav_link_color', '#212121'); ?>;
 		}
-		.usa-footer-primary-section {
+		.usa-footer-primary-section p,
+		.usa-footer-primary-section a, {
 			background: <?php echo get_theme_mod('footer_prime_background_color', '#f1f1f1'); ?>;
+		}
+		.usa-footer-primary-section {
+			color: <?php echo get_theme_mod('footer_prime_text_color', '#212121'); ?>;
 		}
 		.usa-footer-secondary_section {
 			background: <?php echo get_theme_mod('footer_sec_background_color', '#d6d7d9'); ?>;
+		}
+		.usa-footer-secondary_section p,
+		.usa-footer-secondary_section a {
+			color: <?php echo get_theme_mod('footer_sec_text_color', '#212121'); ?>;
 		}
 	</style>
 <?php }
