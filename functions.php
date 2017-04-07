@@ -47,6 +47,8 @@ function standards_setup() {
 		'menu-1' => esc_html__( 'Primary', 'standards' ),
 	) );
 
+  require 'components/default-menu.php';
+
 	/*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
