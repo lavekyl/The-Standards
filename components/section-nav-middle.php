@@ -41,11 +41,16 @@
       <img src="<?php echo get_template_directory_uri() . '/assets/img/close.svg'; ?>" alt="close">
     </button>
     <?php
+    if(has_nav_menu('menu-1')){
       wp_nav_menu( array(
         'theme_location' => 'menu-1',
         'menu_id' => 'primary-menu',
         'menu_class' => 'usa-nav-primary usa-accordion'
       ) );
+
+    }else{
+      usa_default_menu();
+    }
     ?>
   </div>
 </nav><!-- .usa-nav -->
