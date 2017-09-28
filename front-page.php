@@ -1,8 +1,8 @@
 <?php
 /**
- * The front page template file
+ * The template for the front page
  *
- * It is used to display the front page of the website.
+ * This is the template that displays the front page by default.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -10,14 +10,28 @@
  */
 
 get_header(); ?>
+<main id="main-content">
 
-<section id="primary" class="usa-grid usa-section">
-  <?php if ( is_active_sidebar( 'homepage-sidebar-1' ) ) : ?>
-    <?php get_template_part( 'components/section', 'front-sidebar' ); ?>
-  <?php else : ?>
-    <?php get_template_part( 'components/section', 'front-nosidebar' ); ?>
-  <?php endif; ?>
-</section>
+  <div class="usa-overlay"></div>
+  <?php get_template_part( 'inc/components/usa', 'hero' ); ?>
+
+  <section class="usa-grid usa-section">
+    <div class="usa-width-one-third">
+      <h2><?php bloginfo( 'description' ); ?></h2>
+    </div>
+    <div class="usa-width-two-thirds">
+			<?php if ( have_posts() ) {
+      	while ( have_posts() ) {
+      		the_post();
+      		the_content();
+      	} // end while
+      } // end if ?>
+    </div>
+  </section>
+
+  <?php get_template_part( 'inc/components/usa', 'graphic_list' ); ?>
+
+</main><!-- #main-content -->
 
 <?php
 get_footer();

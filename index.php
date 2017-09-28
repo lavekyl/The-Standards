@@ -13,44 +13,47 @@
  */
 
 get_header(); ?>
-
-<section id="primary" class="usa-grid usa-section">
-  <div class="usa-width-one-third">
-		<?php get_sidebar(); ?>
-  </div>
-  <div class="usa-width-two-thirds">
-		<?php
-		if ( have_posts() ) :
-
-			if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
+<main id="main-content">
+	<section class="usa-grid usa-section">
+		<aside class="usa-width-one-fourth usa-layout-docs-sidenav">
+    	<?php get_sidebar(); ?>
+		</aside><!-- .usa-width-one-fourth .usa-layout-docs-sidenav -->
+    <div class="usa-width-three-fourths usa-layout-docs-main_content">
 
 			<?php
-			endif;
+			if ( have_posts() ) :
 
-			/* Start the Loop */
-			while ( have_posts() ) : the_post();
+				if ( is_home() && ! is_front_page() ) : ?>
+					<header>
+						<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+					</header>
 
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_format() );
+				<?php
+				endif;
 
-			endwhile;
+				/* Start the Loop */
+				while ( have_posts() ) : the_post();
 
-			the_posts_navigation();
+					/*
+					 * Include the Post-Format-specific template for the content.
+					 * If you want to override this in a child theme, then include a file
+					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+					 */
+					get_template_part( 'template-parts/content', get_post_format() );
 
-		else :
+				endwhile;
 
-			get_template_part( 'template-parts/content', 'none' );
+				the_posts_navigation();
 
-		endif; ?>
-  </div>
-</section>
+			else :
+
+				get_template_part( 'template-parts/content', 'none' );
+
+			endif; ?>
+
+    </div>
+  </section>
+</main><!-- #main-content -->
 
 <?php
 get_footer();

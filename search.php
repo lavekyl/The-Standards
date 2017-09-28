@@ -8,36 +8,49 @@
  */
 
 get_header(); ?>
+<main id="main-content">
 
-<section id="primary" class="usa-grid usa-section">
-  <div class="usa-width-one-third">
-		<?php get_sidebar(); ?>
-  </div>
-  <div class="usa-width-two-thirds">
-		<?php
-		if ( have_posts() ) :
-			
-			/* Start the Loop */
-			while ( have_posts() ) : the_post();
+	<section class="usa-grid usa-section">
+		<aside class="usa-width-one-fourth usa-layout-docs-sidenav">
+    	<?php get_sidebar(); ?>
+		</aside><!-- .usa-width-one-fourth .usa-layout-docs-sidenav -->
+    <div class="usa-width-three-fourths usa-layout-docs-main_content">
 
-				/**
-				 * Run the loop for the search to output the results.
-				 * If you want to overload this in a child theme then include a file
-				 * called content-search.php and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', 'search' );
+			<?php
+			if ( have_posts() ) : ?>
 
-			endwhile;
+				<header class="page-header">
+					<h1 class="page-title"><?php
+						/* translators: %s: search query. */
+						printf( esc_html__( 'Search Results for: %s', 'the_standards' ), '<span>' . get_search_query() . '</span>' );
+					?></h1>
+				</header><!-- .page-header -->
 
-			the_posts_navigation();
+				<?php
+				/* Start the Loop */
+				while ( have_posts() ) : the_post();
 
-		else :
+					/**
+					 * Run the loop for the search to output the results.
+					 * If you want to overload this in a child theme then include a file
+					 * called content-search.php and that will be used instead.
+					 */
+					get_template_part( 'template-parts/content', 'search' );
 
-			get_template_part( 'template-parts/content', 'none' );
+				endwhile;
 
-		endif; ?>
-  </div>
-</section>
+				the_posts_navigation();
+
+			else :
+
+				get_template_part( 'template-parts/content', 'none' );
+
+			endif; ?>
+
+    </div>
+  </section>
+
+</main><!-- #main-content -->
 
 <?php
 get_footer();
