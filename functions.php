@@ -42,12 +42,22 @@ if ( ! function_exists( 'the_standards_setup' ) ) :
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in one location.
+		// This theme uses wp_nav_menu() in seven possible locations.
 		register_nav_menus( array(
-			'Primary' => __( 'This is the primary navigation menu.', 'the-standards' ),
-			'Secondary' => __( 'This is the secondary navigation menu.', 'the-standards' ),
-			'Footer' => __( 'This is the footer navigation menu.', 'the-standards' ),
+			'primary' => __( 'Primary navigation menu.', 'the-standards' ),
+			'secondary' => __( 'Secondary navigation menu.', 'the-standards' ),
+			'footer' => __( 'Footer navigation menu.', 'the-standards' ),
 		) );
+
+		if( get_theme_mod( 'the_standards_footer_layout_select' ) == 'big' ) {
+			// This theme uses wp_nav_menu() in seven possible locations.
+			register_nav_menus( array(
+				'footer-big-1' => __( 'Footer Big 1', 'the-standards' ),
+				'footer-big-2' => __( 'Footer Big 2', 'the-standards' ),
+				'footer-big-3' => __( 'Footer Big 3', 'the-standards' ),
+				'footer-big-4' => __( 'Footer Big 4', 'the-standards' ),
+			) );
+		}
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
@@ -134,6 +144,17 @@ function the_standards_default_footer() { ?>
 <?php }
 
 /**
+ * Footer Big Nav fallback.
+ *
+ * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
+ */
+function the_standards_default_footer_big() { ?>
+	<ul class="usa-unstyled-list usa-width-one-fourth usa-footer-primary-content">
+		<li class="usa-footer-secondary-link"><a href="<?php echo admin_url('nav-menus.php'); ?>"><?php _e( 'Set Up This Menu', 'the-standards' ); ?></a></li>
+	</ul>
+<?php }
+
+/**
  * Add search item to secondary nav.
  *
  * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
@@ -149,7 +170,7 @@ function the_standards_search_menu_item ( $items, $args ) {
 }
 
 /**
- * Add search item to secondary nav.
+ * Add class to footer nav.
  *
  * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
  */
@@ -159,6 +180,21 @@ function the_standards_menu_classes($classes, $item, $args) {
 
 		$classes[] = 'usa-width-one-third usa-footer-primary-content';
 
+  }
+  return $classes;
+}
+
+/**
+ * Add class to nav menus when big footer is selected.
+ *
+ * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
+ */
+if( get_theme_mod( 'the_standards_footer_layout_select' ) == 'big' ) {
+	add_filter('nav_menu_css_class', 'the_standards_footer_menu_classes', 1, 3);
+}
+function the_standards_footer_menu_classes($classes, $item, $args) {
+  if($args->theme_location == 'Footer Big 1' || $args->theme_location == 'Footer Big 2' || $args->theme_location == 'Footer Big 3' || $args->theme_location == 'Footer Big 4') {
+    $classes[] = 'usa-footer-secondary-link';
   }
   return $classes;
 }

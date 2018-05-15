@@ -54,6 +54,18 @@ function the_standards_widgets_init() {
 		'before_title'  => '<h2>',
 		'after_title'   => '</h2>',
 	) );
+
+	if( get_theme_mod( 'the_standards_footer_layout_select' ) == 'big' ) {
+		register_sidebar( array(
+			'name'          => esc_html__( 'Footer Big Widget', 'the-standards' ),
+			'id'            => 'footer-big',
+			'description'   => esc_html__( 'Add widgets here.', 'the-standards' ),
+			'before_widget' => '',
+			'after_widget'  => '',
+			'before_title'  => '<h3 class="usa-sign_up-header">',
+			'after_title'   => '</h3>',
+		) );
+	}
 }
 add_action( 'widgets_init', 'the_standards_widgets_init' );
 

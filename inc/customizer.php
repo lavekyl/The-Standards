@@ -79,6 +79,30 @@ function the_standards_customize_register( $wp_customize ) {
 	);
 	// Main Content Layout end
 
+	// Footer Layout start
+	$wp_customize->add_setting(
+		'the_standards_footer_layout_select',
+		array(
+			'default'   	   	  => 'medium',
+			'sanitize_callback' => 'the_standards_sanitize_input',
+			'transport' 	    	=> 'refresh'
+		)
+	);
+	$wp_customize->add_control(
+		'the_standards_footer_layout_select',
+		array(
+			'section'  => 'the_standards_display_options',
+			'label'    => 'Footer Layout',
+			'type'     => 'select',
+			'choices'  => array(
+				'slim'      => 'Slim Footer',
+				'medium'   	=> 'Medium Footer',
+				'big'				=> 'Big Footer'
+			)
+		)
+	);
+	// Footer Layout end
+
 	// Standard Header Image start
 	$wp_customize->add_setting(
 		'the_standards_header_image',
