@@ -13,6 +13,7 @@ html {
 
 body {
   background-color: $color-white;
+  color: $color-base;
   overflow-x: hidden;
 }
 
@@ -27,4 +28,9 @@ body {
 // <http://caniuse.com/#feat=hidden>
 [hidden] {
   display: none !important; /* stylelint-disable-line declaration-no-important */
+}
+
+*:focus,
+.usa-focus {
+  @include focus;
 }

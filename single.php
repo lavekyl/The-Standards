@@ -7,33 +7,29 @@
  * @package The_Standards
  */
 
-get_header(); ?>
-<main id="main-content">
+get_header();
+?>
 
 	<section class="usa-grid usa-section">
-		<aside class="usa-width-one-fourth usa-layout-docs-sidenav">
-    	<?php get_sidebar(); ?>
-		</aside><!-- .usa-width-one-fourth .usa-layout-docs-sidenav -->
-    <div class="usa-width-three-fourths usa-layout-docs-main_content">
 
-			<?php
-			while ( have_posts() ) : the_post();
+		<?php
+		while ( have_posts() ) :
+			the_post();
 
-				get_template_part( 'template-parts/content', 'single' );
+			get_template_part( 'template-parts/content', get_post_type() );
 
-				the_post_navigation();
+			the_post_navigation();
 
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
+			// If comments are open or we have at least one comment, load up the comment template.
+			if ( comments_open() || get_comments_number() ) :
+				comments_template();
+			endif;
 
-			endwhile; // End of the loop.
-			?>
+		endwhile; // End of the loop.
+		?>
 
-    </div>
-  </section>
-</main><!-- #main-content -->
+	</section><!-- .usa-grid .usa-section -->
 
 <?php
+get_sidebar();
 get_footer();

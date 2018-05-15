@@ -1,19 +1,38 @@
 The Standards
-===
+=======================
 
-The Standards is a WordPress theme that is based on the U.S. Web Design Standards (https://standards.usa.gov/). While it is minimal, it does provide some elements right out of the box that can be used or removed. The idea is for developers to create additional custom functionality in their own version of this theme, while utilizing or modifying what is already provided. Here is what's included:
+<img alt="The Standards" src="screenshot.png" style="float: right; margin-left: 10px;">
 
-* Well commented WordPress page templates
-* Sidebar and Hero widgets
-* Toggled mobile navigation
-* Mobile friendly sub-navigation
-* Custom logo option
-* Customizer options for social media links, contact information, and a checkbox to determine if it's an official government website
-* A custom post type for Features
-* Includes Gulp with Sass, Plumber, Notify, Autoprefixer, Sourcemaps, Imagemin, JShint, Uglify, CSS Nano, and Concat
-* The U.S. Web Design Standards
-* Licensed under GPLv2 or later
+The Standards is a flexible and feature rich WordPess theme built with Automattic's underscores theme and a modified version of Skeleton CSS.  
 
-The next step is to create a custom WordPress theme of your own, utilizing the U.S. Web Design Standards.
+For additional features, install the The Standards Companion plugin, [The Standards Companion](https://github.com/LavertyCreative/), that came with the The Standards theme.
+<br>
 
-Enjoy!
+
+## Features
+
+#### Customizer options:
+* Colors
+* Site logo
+* Social media profiles
+* Navigation locations
+* Global header image (for interior pages, posts, and standard WordPress templates)
+* Homepage display
+* Sidebar position (left, right, or full width blog)
+* Footer display
+* Copyright message
+
+#### Widgets:
+* Top bar
+* Header right
+* Below posts
+* Flexible footer
+
+#### 3rd party plugin support:
+* Coming soon
+
+### Additional Components
+These components are NOT included in the theme by default, but are available in the Digital Creative Companion plugin, [The Standards Companion](https://github.com/LavertyCreative/).
+
+Here is a list of the currently available components in [The Standards Companion](https://github.com/LavertyCreative/):
+* Coming soon

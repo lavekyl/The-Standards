@@ -17,12 +17,17 @@ function the_standards_body_classes( $classes ) {
 		$classes[] = 'hfeed';
 	}
 
+	// Adds a class of no-sidebar when there is no sidebar present.
+	if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+		$classes[] = 'no-sidebar';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'the_standards_body_classes' );
 
 /**
- * Add a pingback url auto-discovery header for singularly identifiable articles.
+ * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
 function the_standards_pingback_header() {
 	if ( is_singular() && pings_open() ) {
@@ -31,53 +36,73 @@ function the_standards_pingback_header() {
 }
 add_action( 'wp_head', 'the_standards_pingback_header' );
 
-/**
- * Walker class for primary navigation to add usa-nav-submenu.
+/*
+ * Add custom nav walker.
+ *
+ * @link https://codex.wordpress.org/Class_Reference/Walker
  */
-class The_Standards_Walker_Nav_Menu extends Walker_Nav_Menu {
-  function start_lvl(&$output, $depth) {
-    $indent = str_repeat("\t", $depth);
-    $output .= "\n$indent<ul class=\"usa-nav-submenu\">\n";
+class TheStandardsMain_Walker extends Walker_Nav_Menu {
+
+	// add classes to ul sub-menus
+  function start_lvl( &$output, $depth = 0, $args = array(), $id=0 ) {
+    // depth dependent classes
+    $indent = ( $depth > 0  ? str_repeat( "\t", $depth ) : '' ); // code indent
+    $classes = array(
+      'usa-nav-submenu'
+    );
+    $class_names = implode( ' ', $classes );
+
+		$id = 'extended-nav-section-' . $this->curItem->menu_order;
+
+    $output .= "\n" . $indent . '<ul id="' . $id . '" class="' . $class_names . '">' . "\n";
   }
-}
 
-/**
- * Function to add class to parent menu items.
- */
-function the_standards_add_menu_parent_class( $items ) {
-	$parents = array();
-	foreach ( $items as $item ) {
-    //Check if the item is a parent item
-    if ( $item->menu_item_parent && $item->menu_item_parent > 0 ) {
-      $parents[] = $item->menu_item_parent;
+	function end_lvl( &$output, $depth = 0, $args = array() ) {
+    $output .= "</ul>\n";
+  }
+
+	// Displays start of an element. E.g '<li> Item Name'
+  // @see Walker::start_el()
+  function start_el(&$output, $item, $depth=0, $args=array(), $id = 0) {
+
+		$this->curItem = $item;
+		$object = $item->object;
+  	$type = $item->type;
+  	$title = $item->title;
+  	$permalink = $item->url;
+
+		$output .= '<li>';
+
+    // Add SPAN element except in sub-menus
+    if( $permalink && $permalink != '#' ) {
+			if ( $depth == 0 ) {
+				$output .= '<a href="' . $permalink . '" class="usa-nav-link"><span>';
+			} else {
+				$output .= '<a href="' . $permalink . '">';
+			}
+    } else {
+			$output .= '<button class="usa-accordion-button usa-nav-link" aria-expanded="false" aria-controls="extended-nav-section-' . $item->menu_order . '">';
+			$output .= '<span>';
     }
-	}
 
-	foreach ( $items as $item ) {
-    if ( in_array( $item->ID, $parents ) ) {
-      //Add "menu-parent-item" class to parents
-      $item->classes[] = 'usa-nav-has-children';
+    $output .= $title;
+    if( $permalink && $permalink != '#' ) {
+			if ( $depth == 0 ) {
+				$output .= '</span></a>';
+			} else {
+				$output .= '</a>';
+			}
+    } else {
+    	$output .= '</span>';
+			$output .= '</button>';
     }
-	}
 
-	return $items;
+  }
+
+	// Displays end of an element. E.g '</li>'
+  // @see Walker::end_el()
+  function end_el(&$output, $item, $depth=0, $args=array()) {
+      $output .= "</li>\n";
+  }
+
 }
-add_filter( 'wp_nav_menu_objects', 'the_standards_add_menu_parent_class' );
-
-/**
- * Add 'usa-nav-link' class to menu item anchors.
- */
-add_filter( 'nav_menu_link_attributes', 'My_Theme_nav_menu_link_atts', 10, 4 );
-function My_Theme_nav_menu_link_atts( $atts, $item, $args, $depth ) {
-	$new_atts = array( 'class' => 'usa-nav-link' );
-	if ( isset( $atts['href'] ) ) {
-		$new_atts['href'] = $atts['href'];
-	}
-
-	return $new_atts;
-}
-
-/**
- * Remove id from nav menu items.
- */
-add_filter( 'nav_menu_item_id', '__return_empty_string' );

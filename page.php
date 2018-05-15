@@ -7,30 +7,32 @@
  * and that other 'pages' on your WordPress site may use a
  * different template.
  *
- * @link https://codex.wordpress.org/Template_Hierarchy
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package The_Standards
  */
 
-get_header(); ?>
-<main id="main-content">
+get_header();
+?>
 
-  <section class="usa-grid usa-section">
-    <div class="usa-width-one-third">
-      <?php get_sidebar(); ?>
-    </div>
-    <div class="usa-width-two-thirds">
-			<?php
-			while ( have_posts() ) : the_post();
+	<section class="usa-grid usa-section">
 
-				get_template_part( 'template-parts/content', 'page' );
+		<?php
+		while ( have_posts() ) :
+			the_post();
 
-			endwhile; // End of the loop.
-			?>
-    </div>
-  </section>
+			get_template_part( 'template-parts/content', 'page' );
 
-</main><!-- #main-content -->
+			// If comments are open or we have at least one comment, load up the comment template.
+			if ( comments_open() || get_comments_number() ) :
+				comments_template();
+			endif;
+
+		endwhile; // End of the loop.
+		?>
+
+	</section><!-- .usa-grid .usa-section -->
 
 <?php
+get_sidebar();
 get_footer();

@@ -1,7 +1,7 @@
 {
   "name": "the_standards",
   "version": "1.0.0",
-  "description": "## U.S. Web Design Standards WordPress theme",
+  "description": "## U.S. Web Design System WordPress theme",
   "main": "gulpfile.js",
   "directories": {
     "lib": "lib"

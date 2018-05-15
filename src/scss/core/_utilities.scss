@@ -30,10 +30,16 @@
 }
 
 @mixin h6 {
-  font-family: $font-sans;
   font-size: $h6-font-size;
   font-weight: $font-normal;
+  line-height: $base-line-height;
   text-transform: uppercase;
+}
+
+// Focus state mixin
+@mixin focus {
+  outline: $focus-outline;
+  outline-offset: $focus-spacing;
 }
 
 // Mobile-first media query helper
@@ -47,6 +53,15 @@
 @mixin sr-only() {
   position: absolute;
   left: -999em;
+}
+
+// This "negates" the sr-only() helper; useful if
+// we want the default state of something to be
+// for screen readers only, but we want to force
+// it to show for sighted users under more specific
+// conditions.
+@mixin not-sr-only() {
+  position: static;
 }
 
 .usa-sr-only {
@@ -132,8 +147,8 @@
 
 @mixin display-icon($icon, $direction, $size, $margin, $hover) {
   &::#{$direction} {
-    background-image: url(#{$image-path}/#{$icon}.png);
-    background-image: url(#{$image-path}/#{$icon}.svg);
+    background-image: url('#{$image-path}/#{$icon}.png');
+    background-image: url('#{$image-path}/#{$icon}.svg');
     background-size: 100%;
     content: '';
     display: inline-block;
@@ -151,8 +166,8 @@
 
   @if $hover == 'hover' {
     &:hover::#{$direction} {
-      background-image: url(#{$image-path}/#{$icon}-hover.png);
-      background-image: url(#{$image-path}/#{$icon}-hover.svg);
+      background-image: url('#{$image-path}/#{$icon}-hover.png');
+      background-image: url('#{$image-path}/#{$icon}-hover.svg');
     }
   }
 }
@@ -176,7 +191,7 @@
     display: block;
     font-family: $font-sans;
     line-height: 1.3;
-    padding: 0.85rem 1rem 0.85rem 1.8rem;
+    padding: 0.85rem 1rem 0.85rem $site-margins-mobile;
     text-decoration: none;
 
     &:hover {
@@ -186,15 +201,16 @@
     }
 
     &:focus {
+      outline-offset: 0;
       position: relative;
       z-index: 1;
     }
 
     &.usa-current { /* stylelint-disable-line selector-no-qualifying-type */
-      border-left: 0.4rem solid $color-primary;
+      border-left: $sidenav-current-border-width solid $color-primary;
       color: $color-primary;
       font-weight: $font-bold;
-      padding-left: 1.4rem;
+      padding-left: $site-margins-mobile - $sidenav-current-border-width;
     }
   }
 }
@@ -223,6 +239,10 @@
   .usa-sidenav-sub_list {
     a {
       padding-left: 3.8rem;
+
+      &:focus {
+        outline-offset: 0;
+      }
 
       &:hover {
         padding-left: 3.8rem;

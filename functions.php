@@ -19,10 +19,10 @@ if ( ! function_exists( 'the_standards_setup' ) ) :
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on The Standards, use a find and replace
-		 * to change 'the_standards' to the name of your theme in all the template files.
+		 * If you're building a theme based on US Web Design System, use a find and replace
+		 * to change 'the-standards' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'the_standards', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'the-standards', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -44,9 +44,9 @@ if ( ! function_exists( 'the_standards_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'Primary' => __( 'This is the primary navigation menu.', 'the_standards' ),
-			'Secondary' => __( 'This is the secondary navigation menu.', 'the_standards' ),
-			'Footer' => __( 'This is the footer navigation menu.', 'the_standards' ),
+			'Primary' => __( 'This is the primary navigation menu.', 'the-standards' ),
+			'Secondary' => __( 'This is the secondary navigation menu.', 'the-standards' ),
+			'Footer' => __( 'This is the footer navigation menu.', 'the-standards' ),
 		) );
 
 		/*
@@ -60,6 +60,12 @@ if ( ! function_exists( 'the_standards_setup' ) ) :
 			'gallery',
 			'caption',
 		) );
+
+		// Set up the WordPress core custom background feature.
+		add_theme_support( 'custom-background', apply_filters( 'the_standards_custom_background_args', array(
+			'default-color' => 'ffffff',
+			'default-image' => '',
+		) ) );
 
 		// Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
@@ -87,6 +93,9 @@ add_action( 'after_setup_theme', 'the_standards_setup' );
  * @global int $content_width
  */
 function the_standards_content_width() {
+	// This variable is intended to be overruled from themes.
+	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	$GLOBALS['content_width'] = apply_filters( 'the_standards_content_width', 640 );
 }
 add_action( 'after_setup_theme', 'the_standards_content_width', 0 );
@@ -98,7 +107,7 @@ add_action( 'after_setup_theme', 'the_standards_content_width', 0 );
  */
 function the_standards_default_main() { ?>
 	<ul class="usa-nav-primary usa-accordion">
-    <li><a href="<?php echo admin_url('nav-menus.php'); ?>"><?php _e( 'Set Up This Menu', 'the_standards' ); ?></a></li>
+    <li><a href="<?php echo admin_url('nav-menus.php'); ?>" class="usa-nav-link"><span><?php _e( 'Set Up This Menu', 'the-standards' ); ?></span></a></li>
 	</ul>
 <?php }
 
@@ -109,7 +118,7 @@ function the_standards_default_main() { ?>
  */
 function the_standards_default_secondary() { ?>
 	<ul class="usa-unstyled-list usa-nav-secondary-links">
-		<li><a href="<?php echo admin_url('nav-menus.php'); ?>"><?php _e( 'Set Up This Menu', 'the_standards' ); ?></a></li>
+		<li><a href="<?php echo admin_url('nav-menus.php'); ?>"><?php _e( 'Set Up This Menu', 'the-standards' ); ?></a></li>
 	</ul>
 <?php }
 
@@ -120,34 +129,49 @@ function the_standards_default_secondary() { ?>
  */
 function the_standards_default_footer() { ?>
 	<ul class="usa-unstyled-list">
-		<li class="usa-width-one-fourth usa-footer-primary-content"><a href="<?php echo admin_url('nav-menus.php'); ?>"><span class="usa-footer-primary-link"><?php _e( 'Set Up This Menu', 'the_standards' ); ?></span></a></li>
+		<li class="usa-width-one-fourth usa-footer-primary-content"><a href="<?php echo admin_url('nav-menus.php'); ?>"><span class="usa-footer-primary-link"><?php _e( 'Set Up This Menu', 'the-standards' ); ?></span></a></li>
 	</ul>
 <?php }
 
 /**
- * Enqueue scripts and styles.
+ * Add search item to secondary nav.
+ *
+ * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
  */
-function the_standards_scripts_and_styles() {
-	wp_enqueue_style( 'the_standards-uswds-styles', get_template_directory_uri() . '/assets/css/uswds.min.css' );
-	wp_enqueue_style( 'the_standards-style', get_stylesheet_uri() );
-
-	wp_enqueue_script( 'the_standards-uswds-scripts', get_template_directory_uri() . '/assets/js/uswds.min.js', array(), '20170905', true );
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+add_filter( 'wp_nav_menu_items', 'the_standards_search_menu_item', 10, 2 );
+function the_standards_search_menu_item ( $items, $args ) {
+  if ( $args->theme_location == 'Secondary' ) {
+		return '<li class="js-search-button-container">
+							<button class="usa-header-search-button js-search-button">Search</button>
+						</li>' . $items;
+  }
+  return $items;
 }
-add_action( 'wp_enqueue_scripts', 'the_standards_scripts_and_styles' );
 
 /**
- * Widgets.
+ * Add search item to secondary nav.
+ *
+ * @link https://developer.wordpress.org/reference/functions/wp_nav_menu/
+ */
+add_filter('nav_menu_css_class', 'the_standards_menu_classes', 1, 3);
+function the_standards_menu_classes($classes, $item, $args) {
+  if($args->theme_location == 'Footer') {
+
+		$classes[] = 'usa-width-one-third usa-footer-primary-content';
+
+  }
+  return $classes;
+}
+
+/**
+ * Implement theme widgets.
  */
 require get_template_directory() . '/inc/widgets.php';
 
 /**
- * Feature custom post type.
+ * Implement the Custom Header feature.
  */
-require get_template_directory() . '/inc/cpt.php';
+require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -162,7 +186,12 @@ require get_template_directory() . '/inc/template-functions.php';
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer/customizer.php';
+require get_template_directory() . '/inc/customizer.php';
+
+/**
+ * Enqueue assets.
+ */
+require get_template_directory() . '/inc/assets.php';
 
 /**
  * Load Jetpack compatibility file.

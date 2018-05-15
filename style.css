@@ -1,15 +1,24 @@
-/*
+/*!
 Theme Name: The Standards
-Theme URI: https://lavertycreative.com
-Author: Kyle Laverty
+Theme URI: https://lavertycreative.com/
+Author: Kyle Laverty | Laverty Creative
 Author URI: https://lavertycreative.com
-Description: Description
+Description: A theme called US Web Design System, based on the US Web Design System (https://designsystem.digital.gov/). This theme was built with government agencies in mind.
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Text Domain: the_standards
+Text Domain: the-standards
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
 
-The Standards is based on the U.S. Web Design Standards https://standards.usa.gov/
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
 
+US Web Design System is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
+Underscores is distributed under the terms of the GNU GPL v2 or later.
+
+Normalizing styles have been helped along thanks to the fine work of
+Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 */
+/*--------------------------------------------------------------
+>>> ADD CUSTOM STYLES BELOW THIS COMMENT:
+----------------------------------------------------------------

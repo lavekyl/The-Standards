@@ -13,6 +13,7 @@
 function the_standards_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
+	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
 	if ( isset( $wp_customize->selective_refresh ) ) {
 		$wp_customize->selective_refresh->add_partial( 'blogname', array(
@@ -25,9 +26,84 @@ function the_standards_customize_register( $wp_customize ) {
 		) );
 	}
 
+	// Display Options section
+	$wp_customize->add_section( 'the_standards_display_options', array(
+		'title' => __( 'Display Options', 'the-standards' ),
+		'priority' => 150,
+		'capability' => 'edit_theme_options',
+	) );
+
+	// Header Layout start
+	$wp_customize->add_setting(
+		'the_standards_header_layout_select',
+		array(
+			'default'   	   	  => 'basic',
+			'sanitize_callback' => 'the_standards_sanitize_input',
+			'transport' 	    	=> 'refresh'
+		)
+	);
+	$wp_customize->add_control(
+		'the_standards_header_layout_select',
+		array(
+			'section'  => 'the_standards_display_options',
+			'label'    => 'Header Layout',
+			'type'     => 'select',
+			'choices'  => array(
+				'basic'      			=> 'Basic Header',
+				'extended'   			=> 'Extended Header'
+			)
+		)
+	);
+	// Header Layout end
+
+	// Main Content Layout start
+	$wp_customize->add_setting(
+		'the_standards_main_layout_select',
+		array(
+			'default'   	   	  => 'no-sidebar',
+			'sanitize_callback' => 'the_standards_sanitize_input',
+			'transport' 	    	=> 'refresh'
+		)
+	);
+	$wp_customize->add_control(
+		'the_standards_main_layout_select',
+		array(
+			'section'  => 'the_standards_display_options',
+			'label'    => 'Main Content Layout',
+			'type'     => 'select',
+			'choices'  => array(
+				'sidebar'      			=> 'Sidebar',
+				'no-sidebar'   			=> 'No Sidebar'
+			)
+		)
+	);
+	// Main Content Layout end
+
+	// Standard Header Image start
+	$wp_customize->add_setting(
+		'the_standards_header_image',
+		array(
+		  'default'      	    => '',
+			'sanitize_callback' => 'the_standards_sanitize_input',
+		  'transport'    	    => 'refresh'
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'the_standards_header_image',
+			array(
+			    'label'    => 'Standard Header Image',
+			    'settings' => 'the_standards_header_image',
+			    'section'  => 'the_standards_display_options'
+			)
+		)
+	);
+	// Standard Header Image end
+
 	// Social Media items start
 	$wp_customize->add_section( 'social_media_section', array(
-		'title' => __( 'Social Media', 'the_standards' ),
+		'title' => __( 'Social Media', 'the-standards' ),
 		'priority' => 160,
 		'capability' => 'edit_theme_options',
 	) );
@@ -75,7 +151,7 @@ function the_standards_customize_register( $wp_customize ) {
 
 	// Contact info start
 	$wp_customize->add_section( 'contact_information_section', array(
-		'title' => __( 'Contact Information', 'the_standards' ),
+		'title' => __( 'Contact Information', 'the-standards' ),
 		'priority' => 170,
 		'capability' => 'edit_theme_options',
 	) );
@@ -125,6 +201,19 @@ function the_standards_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'the_standards_customize_register' );
 
 /**
+ * Sanitizes the incoming input and returns it prior to serialization.
+ *
+ * @param      string    $input    The string to sanitize
+ * @return     string              The sanitized string
+ * @package    digital-creative-agency
+ * @since      0.5.0
+ * @version    1.0.2
+ */
+function the_standards_sanitize_input( $input ) {
+	return strip_tags( stripslashes( $input ) );
+} // end the_standards_sanitize_input
+
+/**
  * Render the site title for the selective refresh partial.
  *
  * @return void
@@ -146,6 +235,6 @@ function the_standards_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function the_standards_customize_preview_js() {
-	wp_enqueue_script( 'the_standards-customizer', get_template_directory_uri() . '/inc/customizer/customizer.js', array( 'customize-preview' ), '20170905', true );
+	wp_enqueue_script( 'the-standards-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 add_action( 'customize_preview_init', 'the_standards_customize_preview_js' );
