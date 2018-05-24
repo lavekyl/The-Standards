@@ -51,7 +51,7 @@
       </button>
       <?php
       wp_nav_menu( array(
-        'theme_location' => 'menu-1',
+        'theme_location' => 'primary',
         'container' 		 => false,
         'menu_id'        => '',
         'menu_class'		 => 'usa-nav-primary usa-accordion',
@@ -63,7 +63,7 @@
         <?php get_template_part( 'inc/components/usa', 'search' ); ?>
         <?php
         wp_nav_menu( array(
-          'theme_location' => 'Secondary',
+          'theme_location' => 'secondary',
           'container' 		 => false,
           'menu_class' 		 => 'secondary-nav',
           'items_wrap' 		 => '<ul class="usa-unstyled-list usa-nav-secondary-links">%3$s</ul>',

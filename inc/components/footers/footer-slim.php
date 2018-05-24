@@ -14,7 +14,7 @@
       <nav class="usa-footer-nav usa-width-two-thirds">
         <?php
           wp_nav_menu( array(
-            'theme_location' => 'Footer',
+            'theme_location' => 'footer',
             'container' 		 => false,
             'menu_class' 		 => 'footer-nav',
             'link_before'		 => '<span class="usa-footer-primary-link">',
