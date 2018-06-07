@@ -4,6 +4,7 @@ var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
+var browserSync = require('browser-sync').create();
 var imagemin = require('gulp-imagemin');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
@@ -28,6 +29,7 @@ gulp.task('sass', function () {
   .pipe(concat('uswds.min.css'))
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest('./assets/css'));
+  .pipe(browserSync.stream());
 });
 
 gulp.task('scripts', function () {
@@ -48,9 +50,21 @@ gulp.task('images', function () {
   .pipe(gulp.dest('./assets/img'))
 });
 
+// Browser-sync
+gulp.task('browser-sync', function() {
+  var files = [
+    '/assets/css/style.css',
+    '/*.php'
+  ];
+  browserSync.init(files, {
+    // Assumes local site is serving from site.local naming. Change sandbox to your site name.
+    proxy: "the-standards.local"
+  });
+});
+
 gulp.task('watch', function() {
   gulp.watch('src/scss/**/*.scss', ['sass']);
   gulp.watch('src/img/**/*', ['images']);
 });
 
-gulp.task('default', ['sass', 'scripts', 'images', 'watch']);
+gulp.task('default', ['sass', 'scripts', 'images', 'browser-sync', 'watch']);
