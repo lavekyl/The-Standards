@@ -71,14 +71,18 @@ class TheStandardsMain_Walker extends Walker_Nav_Menu {
   	$title = $item->title;
   	$permalink = $item->url;
 
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+
 		$output .= '<li>';
 
     // Add SPAN element except in sub-menus
     if( $permalink && $permalink != '#' ) {
 			if ( $depth == 0 ) {
-				$output .= '<a href="' . $permalink . '" class="usa-nav-link"><span>';
+				$output .= '<a href="' . $permalink . '" ' . $attributes . ' class="usa-nav-link"><span>';
 			} else {
-				$output .= '<a href="' . $permalink . '">';
+				$output .= '<a href="' . $permalink . '" ' . $attributes . '>';
 			}
     } else {
 			$output .= '<button class="usa-accordion-button usa-nav-link" aria-expanded="false" aria-controls="extended-nav-section-' . $item->menu_order . '">';
